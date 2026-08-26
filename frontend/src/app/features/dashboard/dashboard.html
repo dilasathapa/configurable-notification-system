@@ -1,0 +1,153 @@
+<section class="dashboard">
+
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">OVERVIEW</span>
+
+      <h1>Dashboard</h1>
+
+      <p>
+        Monitor your notification rules and recent activity.
+      </p>
+    </div>
+
+    <div class="header-actions">
+      <a routerLink="/events" class="secondary-button">
+        Trigger event
+      </a>
+
+      <a routerLink="/rules" class="primary-button">
+        + Create rule
+      </a>
+    </div>
+  </header>
+
+
+  <section class="stats-grid">
+
+    @for (stat of stats; track stat.label) {
+      <article class="stat-card">
+
+        <span class="stat-label">
+          {{ stat.label }}
+        </span>
+
+        <strong class="stat-value">
+          {{ stat.value }}
+        </strong>
+
+        <span class="stat-description">
+          {{ stat.description }}
+        </span>
+
+      </article>
+    }
+
+  </section>
+
+
+  <section class="content-grid">
+
+    <article class="panel notifications-panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2>Recent notifications</h2>
+          <p>Latest notification activity across your channels.</p>
+        </div>
+
+        <a routerLink="/notifications">
+          View history →
+        </a>
+
+      </div>
+
+
+      <div class="notification-list">
+
+        @for (
+          notification of recentNotifications;
+          track notification.rule + notification.channel
+        ) {
+
+          <div class="notification-row">
+
+            <div class="notification-icon">
+              {{ notification.channel === 'EMAIL' ? '✉' : '◌' }}
+            </div>
+
+            <div class="notification-info">
+              <strong>{{ notification.rule }}</strong>
+              <span>{{ notification.recipient }}</span>
+            </div>
+
+            <span class="channel">
+              {{ notification.channel }}
+            </span>
+
+            <span class="status">
+              <span class="status-dot"></span>
+              {{ notification.status }}
+            </span>
+
+            <span class="time">
+              {{ notification.time }}
+            </span>
+
+          </div>
+
+        }
+
+      </div>
+
+    </article>
+
+
+    <article class="panel quick-actions">
+
+      <div class="panel-header">
+        <div>
+          <h2>Quick actions</h2>
+          <p>Manage your notification workflow.</p>
+        </div>
+      </div>
+
+      <a routerLink="/rules" class="action-card">
+        <span class="action-icon">◈</span>
+
+        <span>
+          <strong>Create a rule</strong>
+          <small>Define when notifications should be sent.</small>
+        </span>
+
+        <span class="arrow">→</span>
+      </a>
+
+      <a routerLink="/events" class="action-card">
+        <span class="action-icon">↗</span>
+
+        <span>
+          <strong>Trigger an event</strong>
+          <small>Simulate an event and test your rules.</small>
+        </span>
+
+        <span class="arrow">→</span>
+      </a>
+
+      <a routerLink="/notifications" class="action-card">
+        <span class="action-icon">◌</span>
+
+        <span>
+          <strong>View history</strong>
+          <small>Review notification delivery history.</small>
+        </span>
+
+        <span class="arrow">→</span>
+      </a>
+
+    </article>
+
+  </section>
+
+</section>
