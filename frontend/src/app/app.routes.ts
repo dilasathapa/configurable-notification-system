@@ -15,9 +15,14 @@ export const routes: Routes = [
   {
     path: 'rules',
     loadComponent: () =>
-      import('./features/rules/rules')
-        .then((m) => m.Rules),
-  },
+        import('./features/rules/rules').then(m => m.Rules)
+    },
+    {
+    path: 'rules/new',
+    loadComponent: () =>
+        import('./features/rules/rule-form/rule-form')
+        .then(m => m.RuleForm)
+    },
   {
     path: 'events',
     loadComponent: () =>

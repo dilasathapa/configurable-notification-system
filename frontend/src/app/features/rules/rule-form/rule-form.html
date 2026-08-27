@@ -1,0 +1,430 @@
+<section class="rule-form-page">
+
+  <header class="page-header">
+
+    <div>
+      <span class="eyebrow">CONFIGURATION</span>
+
+      <h1>Create notification rule</h1>
+
+      <p>
+        Define when a notification should be generated and where it should be delivered.
+      </p>
+    </div>
+
+    <a routerLink="/rules" class="back-link">
+      ← Back to rules
+    </a>
+
+  </header>
+
+
+  @if (submitError) {
+    <div class="form-alert">
+      {{ submitError }}
+    </div>
+  }
+
+
+  <form
+    class="rule-form"
+    [formGroup]="ruleForm"
+    (ngSubmit)="submit()"
+  >
+
+    <!-- BASIC INFORMATION -->
+
+    <section class="form-section">
+
+      <div class="section-heading">
+        <span class="section-number">01</span>
+
+        <div>
+          <h2>Basic information</h2>
+          <p>Give your notification rule a name and define its trigger.</p>
+        </div>
+      </div>
+
+
+      <div class="form-grid">
+
+        <div class="form-field full">
+
+          <label for="name">
+            Rule name
+          </label>
+
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            placeholder="e.g. High Value Orders"
+          />
+
+          @if (
+            ruleForm.controls.name.touched &&
+            ruleForm.controls.name.invalid
+          ) {
+            <span class="field-error">
+              Rule name is required.
+            </span>
+          }
+
+        </div>
+
+
+        <div class="form-field">
+
+          <label for="eventType">
+            Trigger event
+          </label>
+
+          <select
+            id="eventType"
+            formControlName="eventType"
+          >
+            <option value="ORDER_CREATED">
+              Order Created
+            </option>
+
+            <option value="ORDER_UPDATED">
+              Order Updated
+            </option>
+
+            <option value="USER_REGISTERED">
+              User Registered
+            </option>
+
+            <option value="PAYMENT_COMPLETED">
+              Payment Completed
+            </option>
+          </select>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CONDITION -->
+
+    <section class="form-section">
+
+      <div class="section-heading">
+        <span class="section-number">02</span>
+
+        <div>
+          <h2>Condition</h2>
+          <p>Specify the condition that must be satisfied.</p>
+        </div>
+      </div>
+
+
+      <div class="condition-row">
+
+        <div class="form-field">
+
+          <label for="conditionField">
+            Field
+          </label>
+
+          <input
+            id="conditionField"
+            type="text"
+            formControlName="conditionField"
+            placeholder="orderValue"
+          />
+
+        </div>
+
+
+        <div class="form-field">
+
+          <label for="conditionOperator">
+            Operator
+          </label>
+
+          <select
+            id="conditionOperator"
+            formControlName="conditionOperator"
+          >
+            <option value="GREATER_THAN">
+              Greater than
+            </option>
+
+            <option value="LESS_THAN">
+              Less than
+            </option>
+
+            <option value="EQUALS">
+              Equals
+            </option>
+
+            <option value="NOT_EQUALS">
+              Not equals
+            </option>
+          </select>
+
+        </div>
+
+
+        <div class="form-field">
+
+          <label for="conditionValue">
+            Value
+          </label>
+
+          <input
+            id="conditionValue"
+            type="number"
+            formControlName="conditionValue"
+            placeholder="10000"
+          />
+
+          @if (
+            ruleForm.controls.conditionValue.touched &&
+            ruleForm.controls.conditionValue.invalid
+          ) {
+            <span class="field-error">
+              Enter a valid number.
+            </span>
+          }
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- RECIPIENT -->
+
+    <section class="form-section">
+
+      <div class="section-heading">
+        <span class="section-number">03</span>
+
+        <div>
+          <h2>Recipient</h2>
+          <p>Choose who should receive this notification.</p>
+        </div>
+      </div>
+
+
+      <div class="form-grid">
+
+        <div class="form-field">
+
+          <label for="recipientName">
+            Recipient name
+          </label>
+
+          <input
+            id="recipientName"
+            type="text"
+            formControlName="recipientName"
+            placeholder="Sales Manager"
+          />
+
+          @if (
+            ruleForm.controls.recipientName.touched &&
+            ruleForm.controls.recipientName.invalid
+          ) {
+            <span class="field-error">
+              Recipient name is required.
+            </span>
+          }
+
+        </div>
+
+
+        <div class="form-field">
+
+          <label for="recipientEmail">
+            Email address
+          </label>
+
+          <input
+            id="recipientEmail"
+            type="email"
+            formControlName="recipientEmail"
+            placeholder="sales@example.com"
+          />
+
+          @if (
+            ruleForm.controls.recipientEmail.touched &&
+            ruleForm.controls.recipientEmail.invalid
+          ) {
+            <span class="field-error">
+              Enter a valid email address.
+            </span>
+          }
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CHANNELS -->
+
+    <section class="form-section">
+
+      <div class="section-heading">
+        <span class="section-number">04</span>
+
+        <div>
+          <h2>Notification channels</h2>
+          <p>Select where this notification should be delivered.</p>
+        </div>
+      </div>
+
+
+      <div class="channel-options">
+
+        <label class="channel-option">
+
+          <input
+            type="checkbox"
+            formControlName="emailChannel"
+          />
+
+          <span class="channel-check">✉</span>
+
+          <span class="channel-content">
+            <strong>Email</strong>
+            <small>Send an email notification.</small>
+          </span>
+
+        </label>
+
+
+        <label class="channel-option">
+
+          <input
+            type="checkbox"
+            formControlName="inAppChannel"
+          />
+
+          <span class="channel-check">◌</span>
+
+          <span class="channel-content">
+            <strong>In-App</strong>
+            <small>Create a notification inside the application.</small>
+          </span>
+
+        </label>
+
+      </div>
+
+    </section>
+
+
+    <!-- MESSAGE -->
+
+    <section class="form-section">
+
+      <div class="section-heading">
+        <span class="section-number">05</span>
+
+        <div>
+          <h2>Message template</h2>
+          <p>Define the message generated when the rule matches.</p>
+        </div>
+      </div>
+
+
+      <div class="form-field">
+
+        <label for="template">
+          Message
+        </label>
+
+        <textarea
+          id="template"
+          formControlName="template"
+          rows="4"
+          placeholder="A high-value order using an event value has been placed."
+        ></textarea>
+
+        <span class="field-hint">
+          Use the event field name inside double curly braces to insert its value.
+        </span>
+
+        @if (
+          ruleForm.controls.template.touched &&
+          ruleForm.controls.template.invalid
+        ) {
+          <span class="field-error">
+            Message template is required.
+          </span>
+        }
+
+      </div>
+
+    </section>
+
+
+    <!-- STATUS -->
+
+    <section class="form-section">
+
+      <div class="section-heading">
+        <span class="section-number">06</span>
+
+        <div>
+          <h2>Rule status</h2>
+          <p>Choose whether this rule should be active immediately.</p>
+        </div>
+      </div>
+
+
+      <label class="toggle-option">
+
+        <input
+          type="checkbox"
+          formControlName="enabled"
+        />
+
+        <span class="toggle-switch"></span>
+
+        <span>
+          <strong>Enable rule</strong>
+          <small>Notifications will be generated when this rule matches.</small>
+        </span>
+
+      </label>
+
+    </section>
+
+
+    <!-- ACTIONS -->
+
+    <div class="form-actions">
+
+      <a
+        routerLink="/rules"
+        class="cancel-button"
+      >
+        Cancel
+      </a>
+
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="isSubmitting"
+      >
+        @if (isSubmitting) {
+          Creating...
+        } @else {
+          Create notification rule
+        }
+      </button>
+
+    </div>
+
+  </form>
+
+</section>

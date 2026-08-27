@@ -1,1 +1,239 @@
-<p>rules works!</p>
+
+
+<section class="rules-page">
+
+   
+
+  <header class="page-header">
+
+    <div>
+      <span class="eyebrow">CONFIGURATION</span>
+
+      <h1>Notification Rules</h1>
+
+      <p>
+        Configure when and how your notifications are generated.
+      </p>
+    </div>
+
+    <a routerLink="/rules/new" class="primary-button">
+      + Create rule
+    </a>
+
+  </header>
+
+
+  @if (errorMessage()) {
+
+    <div class="error-state">
+      {{ errorMessage() }}
+    </div>
+
+  }
+
+  
+
+
+  @if (isLoading()) {
+
+    <div class="loading-state">
+      Loading notification rules...
+    </div>
+
+  }
+
+
+  @if (!isLoading() && !errorMessage()) {
+
+    <section class="rules-summary">
+
+      <div class="summary-item">
+
+        <span class="summary-label">
+          Total rules
+        </span>
+
+        <strong>
+          {{ rules().length }}
+        </strong>
+
+      </div>
+
+
+      <div class="summary-divider"></div>
+
+
+      <div class="summary-item">
+
+        <span class="summary-label">
+          Active
+        </span>
+
+        <strong>
+          {{ rules().filter(rule => rule.enabled).length }}
+        </strong>
+
+      </div>
+
+    </section>
+
+
+    <section class="rules-list">
+
+      @for (rule of rules(); track rule._id) {
+
+        <article class="rule-card">
+
+          <div class="rule-card-header">
+
+            <div class="rule-title">
+
+              <div class="rule-icon">
+                ◈
+              </div>
+
+              <div>
+
+                <h2>
+                  {{ rule.name }}
+                </h2>
+
+                <span
+                  class="rule-status"
+                  [class.disabled]="!rule.enabled"
+                >
+
+                  <span class="status-dot"></span>
+
+                  {{ rule.enabled ? 'Enabled' : 'Disabled' }}
+
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="rule-actions">
+
+              <button
+                class="text-button"
+                type="button"
+              >
+                Edit
+              </button>
+
+              <button
+                class="text-button"
+                type="button"
+                (click)="toggleRule(rule)"
+              >
+                {{ rule.enabled ? 'Disable' : 'Enable' }}
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="rule-details">
+
+            <div class="detail-block">
+
+              <span class="detail-label">
+                Trigger
+              </span>
+
+              <span class="detail-value event">
+                {{ rule.eventType }}
+              </span>
+
+            </div>
+
+
+            <div class="detail-block">
+
+              <span class="detail-label">
+                Condition
+              </span>
+
+              @for (
+                condition of rule.conditions;
+                track $index
+              ) {
+
+                <span class="detail-value">
+
+                  {{ condition.field }}
+
+                  {{ condition.operator }}
+
+                  {{ condition.value }}
+
+                </span>
+
+              }
+
+            </div>
+
+
+            <div class="detail-block">
+
+              <span class="detail-label">
+                Channels
+              </span>
+
+              <div class="channels">
+
+                @for (
+                  channel of rule.channels;
+                  track channel
+                ) {
+
+                  <span class="channel-badge">
+                    {{ channel }}
+                  </span>
+
+                }
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      }
+
+    </section>
+
+
+    @if (rules().length === 0) {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          ◈
+        </div>
+
+        <h2>No notification rules</h2>
+
+        <p>
+          Create your first rule to start generating notifications.
+        </p>
+
+        <a
+          routerLink="/rules/new"
+          class="primary-button"
+        >
+          Create your first rule
+        </a>
+
+      </div>
+
+    }
+
+  }
+
+</section>
