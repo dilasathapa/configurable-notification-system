@@ -32,6 +32,20 @@ export interface ApiResponse<T> {
   message?: string;
 }
 
+export interface TriggerEventData {
+  eventId: string;
+  eventType: string;
+  data: {
+    orderValue: number;
+  };
+}
+
+export interface TriggerEventResult {
+  eventId: string;
+  matchedRules: number;
+  notificationsCreated: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -68,6 +82,15 @@ export class Api {
   deleteRule(id: string): Observable<ApiResponse<null>> {
     return this.http.delete<ApiResponse<null>>(
       `${this.baseUrl}/rules/${id}`,
+    );
+  }
+
+  triggerEvent(
+    event: TriggerEventData,
+  ): Observable<ApiResponse<TriggerEventResult>> {
+    return this.http.post<ApiResponse<TriggerEventResult>>(
+      `${this.baseUrl}/events`,
+      event,
     );
   }
 }

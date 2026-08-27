@@ -1,1 +1,236 @@
-<p>events works!</p>
+<section class="events-page">
+
+  <header class="page-header">
+
+    <div>
+      <span class="eyebrow">EVENT SIMULATOR</span>
+
+      <h1>Trigger an Event</h1>
+
+      <p>
+        Send an event into the notification engine and see
+        which rules are matched.
+      </p>
+    </div>
+
+  </header>
+
+
+  <div class="event-layout">
+
+    <section class="event-card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>Event details</h2>
+
+          <p>
+            Simulate a business event to test your
+            notification rules.
+          </p>
+        </div>
+
+      </div>
+
+
+      <form
+        class="event-form"
+        (ngSubmit)="triggerEvent()"
+      >
+
+        <div class="form-field">
+
+          <label for="eventId">
+            Event ID
+          </label>
+
+          <input
+            id="eventId"
+            type="text"
+            name="eventId"
+            [(ngModel)]="eventId"
+            placeholder="evt_demo_001"
+          />
+
+          <span class="field-hint">
+            A unique identifier for this event.
+          </span>
+
+        </div>
+
+
+        <div class="form-field">
+
+          <label for="eventType">
+            Event type
+          </label>
+
+          <select
+            id="eventType"
+            name="eventType"
+            [(ngModel)]="eventType"
+          >
+
+            <option value="ORDER_CREATED">
+              ORDER_CREATED
+            </option>
+
+            <option value="PAYMENT_COMPLETED">
+              PAYMENT_COMPLETED
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="form-field">
+
+          <label for="orderValue">
+            Order value
+          </label>
+
+          <div class="input-prefix">
+
+            <span>$</span>
+
+            <input
+              id="orderValue"
+              type="number"
+              name="orderValue"
+              [(ngModel)]="orderValue"
+              min="0"
+              placeholder="15000"
+            />
+
+          </div>
+
+          <span class="field-hint">
+            Try 15,000 to trigger the high-value order rule.
+          </span>
+
+        </div>
+
+
+        @if (errorMessage()) {
+
+          <div class="error-message">
+            {{ errorMessage() }}
+          </div>
+
+        }
+
+
+        <button
+          type="submit"
+          class="primary-button"
+          [disabled]="isSubmitting()"
+        >
+
+          @if (isSubmitting()) {
+            Processing event...
+          } @else {
+            Trigger event
+          }
+
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <aside class="info-card">
+
+      <div class="info-icon">
+        ⚡
+      </div>
+
+      <h2>How it works</h2>
+
+      <p>
+        When you trigger an event, the notification engine
+        evaluates all enabled rules.
+      </p>
+
+      <div class="flow">
+
+        <div class="flow-item">
+          <strong>1</strong>
+          <span>Event received</span>
+        </div>
+
+        <div class="flow-item">
+          <strong>2</strong>
+          <span>Rules evaluated</span>
+        </div>
+
+        <div class="flow-item">
+          <strong>3</strong>
+          <span>Notifications generated</span>
+        </div>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+
+  @if (result(); as eventResult) {
+
+    <section class="result-card">
+
+      <div class="result-header">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <div>
+          <h2>Event processed successfully</h2>
+
+          <p>
+            Event {{ eventResult.eventId }} was evaluated
+            by the notification engine.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="result-stats">
+
+        <div class="result-stat">
+
+          <span>
+            Rules matched
+          </span>
+
+          <strong>
+            {{ eventResult.matchedRules }}
+          </strong>
+
+        </div>
+
+
+        <div class="result-stat">
+
+          <span>
+            Notifications created
+          </span>
+
+          <strong>
+            {{ eventResult.notificationsCreated }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+</section>
