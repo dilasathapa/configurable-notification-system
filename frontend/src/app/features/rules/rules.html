@@ -116,12 +116,12 @@
 
             <div class="rule-actions">
 
-              <button
+              <a
                 class="text-button"
-                type="button"
-              >
+                [routerLink]="['/rules', rule._id, 'edit']"
+                >
                 Edit
-              </button>
+              </a>
 
               <button
                 class="text-button"

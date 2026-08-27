@@ -82,6 +82,12 @@ export class Api {
     );
   }
 
+  getRule(id: string): Observable<ApiResponse<NotificationRule>> {
+    return this.http.get<ApiResponse<NotificationRule>>(
+      `${this.baseUrl}/rules/${id}`,
+    );
+  }
+
   createRule(
     rule: NotificationRule,
   ): Observable<ApiResponse<NotificationRule>> {

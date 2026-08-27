@@ -20,25 +20,20 @@ export class Rules implements OnInit {
   readonly errorMessage = signal('');
 
   ngOnInit(): void {
-    console.log('Rules component initialized');
     this.loadRules();
   }
 
   loadRules(): void {
-    console.log('Loading rules...');
 
     this.isLoading.set(true);
     this.errorMessage.set('');
 
     this.api.getRules().subscribe({
       next: (response) => {
-        console.log('Rules API response:', response);
 
         this.rules.set(response.data ?? []);
         this.isLoading.set(false);
 
-        console.log('Rules loaded:', this.rules());
-        console.log('Loading state:', this.isLoading());
       },
 
       error: (error) => {
