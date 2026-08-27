@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+
 
 export interface RuleCondition {
   field: string;
@@ -74,7 +76,7 @@ export interface TriggerEventResult {
 export class Api {
   private readonly http = inject(HttpClient);
 
-  private readonly baseUrl = 'http://localhost:5005/api';
+  private readonly baseUrl = environment.apiUrl;
 
   getRules(): Observable<ApiResponse<NotificationRule[]>> {
     return this.http.get<ApiResponse<NotificationRule[]>>(
