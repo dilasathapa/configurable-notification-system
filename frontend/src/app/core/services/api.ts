@@ -26,6 +26,28 @@ export interface NotificationRule {
   updatedAt?: string;
 }
 
+export interface NotificationRecipient {
+  name: string;
+  email: string;
+}
+
+export interface NotificationRuleReference {
+  _id: string;
+  name: string;
+}
+
+export interface Notification {
+  _id: string;
+  ruleId: NotificationRuleReference;
+  eventId: string;
+  recipient: NotificationRecipient;
+  channel: string;
+  message: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ApiResponse<T> {
   success: boolean;
   data: T;
@@ -91,6 +113,12 @@ export class Api {
     return this.http.post<ApiResponse<TriggerEventResult>>(
       `${this.baseUrl}/events`,
       event,
+    );
+  }
+
+  getNotifications(): Observable<ApiResponse<Notification[]>> {
+    return this.http.get<ApiResponse<Notification[]>>(
+      `${this.baseUrl}/notifications`,
     );
   }
 }
